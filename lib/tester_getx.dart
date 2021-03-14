@@ -32,16 +32,16 @@ class _Wrapper extends StatelessWidget {
 @isTest
 void getxControllerTesting<T>(
   String description,
-  void Function(T?)? callback, {
+  void Function(T?) callback, {
   @required T? controller,
-  void Function(T?)? onInit,
-  void Function(T?)? onReady,
-  void Function(T?)? onClose,
+  void Function(T)? onInit,
+  void Function(T)? onReady,
+  void Function(T)? onClose,
 }) {
   test(description, () {
-    onInit!(controller);
+    onInit!(controller!);
     SchedulerBinding?.instance?.addPostFrameCallback((f) {
-      onReady!(controller);
+      onReady!(controller!);
     });
     callback!(controller);
     onClose!(controller);
