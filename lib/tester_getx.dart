@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 import 'utils/image_test.dart';
 
 class _Wrapper extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
   final List<GetPage>? getPages;
   final String? initialRoute;
 
@@ -24,23 +24,23 @@ class _Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       initialRoute: initialRoute,
-      getPages: getPages ?? [GetPage(name: '/', page: () => child)],
+      getPages: getPages ?? [GetPage(name: '/', page: () => child!)],
     );
   }
 }
 
 @isTest
 void getxControllerTesting<T>(
-  String description,
+  String? description,
   void Function(T?)? callback, {
   @required T? controller,
   void Function(T?)? onInit,
   void Function(T?)? onReady,
   void Function(T?)? onClose,
 }) {
-  test(description, () {
+  test(description!, () {
     onInit!(controller);
-    SchedulerBinding.instance!.addPostFrameCallback((f) {
+    SchedulerBinding?.instance?.addPostFrameCallback((f) {
       onReady!(controller);
     });
     callback!(controller);
@@ -50,12 +50,12 @@ void getxControllerTesting<T>(
 
 @isTest
 Future<T?> getXTesting<T extends DisposableInterface>(
-  String description, {
+  String? description, {
   @required GetX<T>? widget,
   @required void Function(T? controller)? test,
 }) async {
   T? controller;
-  testWidgets(description, (tester) async {
+  testWidgets(description!, (tester) async {
     provideMockedNetworkImages(() async {
       await tester.pumpWidget(GetMaterialApp(home: widget!));
       final controller = Get.find<T>();
@@ -66,13 +66,13 @@ Future<T?> getXTesting<T extends DisposableInterface>(
 }
 
 @isTest
-Future<T> getBuilderTesting<T extends GetxController>(
-  String description, {
+Future<T?> getBuilderTesting<T extends GetxController>(
+  String? description, {
   @required GetBuilder<T>? widget,
   @required void Function(T? controller)? test,
 }) async {
   T? controller;
-  testWidgets(description, (tester) async {
+  testWidgets(description!, (tester) async {
     provideMockedNetworkImages(() async {
       await tester.pumpWidget(GetMaterialApp(home: widget!));
       final controller = Get.find<T>();
@@ -108,7 +108,7 @@ void getxTesting(
   bool? skip = false,
   Timeout? timeout,
   Duration? initialTimeout,
-  bool semanticsEnabled = true,
+  bool? semanticsEnabled = true,
   TestVariant<Object?>? variant = const DefaultTestVariant(),
   dynamic? tags,
 }) {
@@ -134,9 +134,9 @@ void getxTesting(
       });
     },
     skip: skip!,
-    timeout: timeout,
-    initialTimeout: initialTimeout,
-    semanticsEnabled: semanticsEnabled,
+    timeout: timeout!,
+    initialTimeout: initialTimeout!,
+    semanticsEnabled: semanticsEnabled!,
     variant: variant!,
     tags: tags,
   );
