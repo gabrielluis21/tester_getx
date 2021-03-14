@@ -31,14 +31,14 @@ class _Wrapper extends StatelessWidget {
 
 @isTest
 void getxControllerTesting<T>(
-  String? description,
+  String description,
   void Function(T?)? callback, {
   @required T? controller,
   void Function(T?)? onInit,
   void Function(T?)? onReady,
   void Function(T?)? onClose,
 }) {
-  test(description!, () {
+  test(description, () {
     onInit!(controller);
     SchedulerBinding?.instance?.addPostFrameCallback((f) {
       onReady!(controller);
@@ -49,13 +49,13 @@ void getxControllerTesting<T>(
 }
 
 @isTest
-Future<T?> getXTesting<T extends DisposableInterface>(
-  String? description, {
+Future<T> getXTesting<T extends DisposableInterface>(
+  String description, {
   @required GetX<T>? widget,
   @required void Function(T? controller)? test,
 }) async {
   T? controller;
-  testWidgets(description!, (tester) async {
+  testWidgets(description, (tester) async {
     provideMockedNetworkImages(() async {
       await tester.pumpWidget(GetMaterialApp(home: widget!));
       final controller = Get.find<T>();
@@ -67,12 +67,12 @@ Future<T?> getXTesting<T extends DisposableInterface>(
 
 @isTest
 Future<T?> getBuilderTesting<T extends GetxController>(
-  String? description, {
+  String description, {
   @required GetBuilder<T>? widget,
   @required void Function(T? controller)? test,
 }) async {
   T? controller;
-  testWidgets(description!, (tester) async {
+  testWidgets(description, (tester) async {
     provideMockedNetworkImages(() async {
       await tester.pumpWidget(GetMaterialApp(home: widget!));
       final controller = Get.find<T>();
@@ -84,12 +84,12 @@ Future<T?> getBuilderTesting<T extends GetxController>(
 
 @isTest
 Future<T?> obxTesting<T extends GetxController>(
-  String? description, {
+  String description, {
   @required T? controller,
   @required Obx? Function(T? controller)? widget,
   @required void Function(T? controller)? test,
 }) async {
-  testWidgets(description!, (tester) async {
+  testWidgets(description, (tester) async {
     provideMockedNetworkImages(() async {
       await tester.pumpWidget(GetMaterialApp(home: widget!(controller)));
       test!(controller);
